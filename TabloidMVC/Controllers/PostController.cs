@@ -67,6 +67,26 @@ namespace TabloidMVC.Controllers
                 return View(vm);
             }
         }
+        //Get: PostController/Edit
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
+
+        // POST: PostController/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
         private int GetCurrentUserProfileId()
         {
