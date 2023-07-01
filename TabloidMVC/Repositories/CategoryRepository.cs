@@ -98,8 +98,8 @@ namespace TabloidMVC.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    DELETE FROM Category c
-                    WHERE c.Id = @id
+                    DELETE FROM Category 
+                    WHERE Id = @id
                 ";
 
                     cmd.Parameters.AddWithValue("@id", categoryId);
