@@ -13,7 +13,7 @@ namespace TabloidMVC.Repositories
             _config = config;
         }
 
-        public SqlConnection Connection
+        public new SqlConnection Connection
         {
             get
             {
@@ -98,8 +98,8 @@ namespace TabloidMVC.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    DELETE FROM Category
-                    WHERE Id = @id
+                    DELETE FROM Category c
+                    WHERE c.Id = @id
                 ";
 
                     cmd.Parameters.AddWithValue("@id", categoryId);
