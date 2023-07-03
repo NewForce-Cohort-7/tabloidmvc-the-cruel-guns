@@ -6,6 +6,7 @@ using System.Security.Claims;
 using TabloidMVC.Models.ViewModels;
 using TabloidMVC.Repositories;
 
+
 namespace TabloidMVC.Controllers
 {
     [Authorize]
@@ -13,13 +14,16 @@ namespace TabloidMVC.Controllers
     {
         private readonly IPostRepository _postRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IUserProfileRepository _userProfileRepository;
 
-        public PostController(IPostRepository postRepository, ICategoryRepository categoryRepository)
+        public PostController(IPostRepository postRepository, ICategoryRepository categoryRepository, IUserProfileRepository userProfileRepository)
         {
             _postRepository = postRepository;
             _categoryRepository = categoryRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
+        //Get: PostController
         public IActionResult Index()
         {
             var posts = _postRepository.GetAllPublishedPosts();
@@ -82,7 +86,7 @@ namespace TabloidMVC.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch 
             {
                 return View();
             }
