@@ -31,6 +31,7 @@ namespace TabloidMVC.Repositories
                     cmd.CommandText = @"
                         SELECT id, name 
                         FROM Category
+                        ORDER BY name
                     ";
                     var reader = cmd.ExecuteReader();
 
