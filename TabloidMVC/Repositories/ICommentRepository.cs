@@ -1,8 +1,10 @@
-﻿namespace TabloidMVC.Repositories
+﻿using TabloidMVC.Models;
+
+namespace TabloidMVC.Repositories
 {
     public interface ICommentRepository
     {
         void Add(Comment comment);
-        List<CommentRepository> GetCommentsByPost();
+       public List<Comment> GetCommentsByPost(int postId);
     }
 }

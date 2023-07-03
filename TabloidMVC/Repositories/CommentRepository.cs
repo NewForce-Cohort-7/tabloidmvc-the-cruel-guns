@@ -12,7 +12,7 @@ namespace TabloidMVC.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Comment> GetCommentsByPost(int id)
+        public List<Comment> GetCommentsByPost(int postId)
         {
             using (var conn = Connection)
             {
@@ -20,16 +20,17 @@ namespace TabloidMVC.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                SELECT co.Id as CommentId, co.PostId as CommentPostId, 
+                SELECT co.Id as CommentId, co.PostId as CommentPostId, p.Title AS PostTitle, 
                 co.UserProfileId, co.Subject as CommentSubject, 
-                co.Content as CommentContent, co.CreateDateTime as CommentDate,
+                co.Content as CommentContent, co.CreateDateTime as CommentDate, u.DisplayName AS DisplayName,
                 u.Id as UserProfileId, u.CreateDateTime, u.ImageLocation as AvatarImage,
                 u.UserTypeId
                 FROM Comment co
-                LEFT JOIN UserProfile u ON co.UserProfileId = u.Id
-                WHERE co.PostId = @id";
+                JOIN UserProfile u ON co.UserProfileId = u.Id
+                JOIN Post p ON p.Id = co.PostId
+                WHERE co.PostId = @postId";
 
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@postId", postId);
 
                     var reader = cmd.ExecuteReader();
                     var comments = new List<Comment>();
@@ -47,7 +48,7 @@ namespace TabloidMVC.Repositories
                             UserProfile = new UserProfile
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
-                                // Populate other properties of UserProfile as needed
+                                DisplayName = reader.GetString(reader.GetOrdinal("DisplayName"))
                             }
                         };
 
@@ -60,3 +61,4 @@ namespace TabloidMVC.Repositories
             }
         }
     }
+}
