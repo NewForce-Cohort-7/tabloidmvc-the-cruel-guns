@@ -31,6 +31,7 @@ namespace TabloidMVC.Repositories
                     cmd.CommandText = @"
                         SELECT id, name 
                         FROM Category
+                        ORDER BY name
                     ";
                     var reader = cmd.ExecuteReader();
 
@@ -105,6 +106,28 @@ namespace TabloidMVC.Repositories
                     cmd.Parameters.AddWithValue("@id", categoryId);
 
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void AddCategory(Category category)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                INSERT INTO Category ([Name])
+                OUTPUT INSERTED.ID
+                VALUES (@name);
+            ";
+
+                    cmd.Parameters.AddWithValue("@name", category.Name);
+
+                    int id = (int)cmd.ExecuteScalar();
+
+                    category.Id = id;
                 }
             }
         }
