@@ -29,24 +29,26 @@ public class CategoryController : Controller
             return View();
         }
 
-        // GET: CategoryController/Create
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: CategoryController/Create
+        // POST: Category/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Category category)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _categoryRepo.AddCategory(category);
+
+                return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View(category);
             }
         }
 
