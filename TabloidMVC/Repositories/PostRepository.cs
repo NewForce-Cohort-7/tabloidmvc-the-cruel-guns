@@ -28,7 +28,9 @@ namespace TabloidMVC.Repositories
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE IsApproved = 1 AND PublishDateTime < SYSDATETIME()";
+                        WHERE IsApproved = 1 AND PublishDateTime < SYSDATETIME()
+                         ORDER BY p.PublishDateTime DESC"; // Added ORDER BY clause
+
                     var reader = cmd.ExecuteReader();
 
                     var posts = new List<Post>();
@@ -67,7 +69,8 @@ namespace TabloidMVC.Repositories
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
                         WHERE IsApproved = 1 AND PublishDateTime < SYSDATETIME()
-                              AND p.id = @id";
+                              AND p.id = @id
+                        ORDER BY p.PublishDateTime DESC"; // Added ORDER BY clause
 
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
@@ -128,7 +131,8 @@ namespace TabloidMVC.Repositories
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE p.id = @id AND p.UserProfileId = @userProfileId";
+                        WHERE p.id = @id AND p.UserProfileId = @userProfileId
+                        ORDER BY p.PublishDateTime DESC"; // Added ORDER BY clause;
 
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@userProfileId", userProfileId);
@@ -164,7 +168,9 @@ namespace TabloidMVC.Repositories
                         OUTPUT INSERTED.ID
                         VALUES (
                             @Title, @Content, @ImageLocation, @CreateDateTime, @PublishDateTime,
-                            @IsApproved, @CategoryId, @UserProfileId )";
+                            @IsApproved, @CategoryId, @UserProfileId)
+                        ORDER BY p.PublishDateTime DESC"; // Added ORDER BY clause
+
                     cmd.Parameters.AddWithValue("@Title", post.Title);
                     cmd.Parameters.AddWithValue("@Content", post.Content);
                     cmd.Parameters.AddWithValue("@ImageLocation", DbUtils.ValueOrDBNull(post.ImageLocation));
@@ -194,9 +200,9 @@ namespace TabloidMVC.Repositories
                                 Content = @content, 
                                 ImageLocation = @imageLocation,
                                 UserProfileId = @userProfileId
-                                
-                              
-                            WHERE Id = @id";
+                                WHERE Id = @id
+                                ORDER BY p.CreateDateTime DESC"; // Added ORDER BY clause";
+
                     cmd.Parameters.AddWithValue("@id", post.Id);
                     cmd.Parameters.AddWithValue("@content", post.Content);
                     cmd.Parameters.AddWithValue("@title", post.Title);
