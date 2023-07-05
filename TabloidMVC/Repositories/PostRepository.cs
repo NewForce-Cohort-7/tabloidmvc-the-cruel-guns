@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Reflection.PortableExecutable;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Data.SqlClient;
 using TabloidMVC.Models;
 using TabloidMVC.Utils;
 
