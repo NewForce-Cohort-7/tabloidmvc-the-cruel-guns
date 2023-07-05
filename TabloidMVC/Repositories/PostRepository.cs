@@ -44,7 +44,7 @@ namespace TabloidMVC.Repositories
                 }
             }
         }
-
+        //Get specific Post
         public Post GetPublishedPostById(int id)
         {
             using (var conn = Connection)
@@ -111,6 +111,7 @@ namespace TabloidMVC.Repositories
 
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@userProfileId", userProfileId);
+                  
                     var reader = cmd.ExecuteReader();
 
                     Post post = null;
@@ -126,7 +127,7 @@ namespace TabloidMVC.Repositories
                 }
             }
         }
-
+//Add Post
 
         public void Add(Post post)
         {
@@ -153,6 +154,35 @@ namespace TabloidMVC.Repositories
                     cmd.Parameters.AddWithValue("@UserProfileId", post.UserProfileId);
 
                     post.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+//Edit Post
+        public void UpdatePost(Post post)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            UPDATE POST
+                            SET 
+                                [Title] = @title, 
+                                Content = @content, 
+                                ImageLocation = @imageLocation,
+                                UserProfileId = @userProfileId
+                                
+                              
+                            WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", post.Id);
+                    cmd.Parameters.AddWithValue("@content", post.Content);
+                    cmd.Parameters.AddWithValue("@title", post.Title);
+                    cmd.Parameters.AddWithValue("@imageLocation", post.ImageLocation);
+                    cmd.Parameters.AddWithValue("@userProfileId", post.UserProfileId);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
