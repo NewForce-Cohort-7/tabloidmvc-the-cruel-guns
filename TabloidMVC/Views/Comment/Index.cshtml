@@ -1,0 +1,53 @@
+﻿@model TabloidMVC.Models.ViewModels.PostCommentViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Comments</h1>
+<td>@Html.ActionLink(Model.PostTitle, "Details", "Post", new { id = Model.PostId }, null)</td>
+<p>
+    <a asp-action="Create">Add a Comment</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Author:
+            </th>
+            <th>
+               Subject:
+            </th>
+            <th>
+               Comment:
+            </th>
+            <th>
+               Created On:
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Comments) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserProfile.DisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDateTime)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
