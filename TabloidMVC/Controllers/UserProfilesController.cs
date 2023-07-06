@@ -17,6 +17,12 @@ namespace TabloidMVC.Controllers
         public ActionResult Index()
         {
             List<UserProfile> userProfiles = _userProfileRepo.GetAllUserProfiles();
+
+            foreach (var userProfile in userProfiles)
+            {
+                var fullName = userProfile.FullName;
+            }
+
             return View(userProfiles);
         }
 

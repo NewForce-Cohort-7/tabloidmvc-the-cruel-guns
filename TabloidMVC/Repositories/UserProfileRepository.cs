@@ -6,7 +6,10 @@ namespace TabloidMVC.Repositories
 {
     public class UserProfileRepository : BaseRepository, IUserProfileRepository
     {
-        public UserProfileRepository(IConfiguration config) : base(config) { }
+        private readonly string FullName;
+
+        public UserProfileRepository(IConfiguration config) : base(config) {}
+
 
         public List<UserProfile> GetAllUserProfiles()
         {

@@ -11,7 +11,7 @@
         public string ImageLocation { get; set; }
         public int UserTypeId { get; set; }
         public UserType UserType { get; set; }
-        public string FullName
+        public string? FullName
         {
             get
             {
